@@ -88,6 +88,11 @@ function setActiveView(view) {
   });
 }
 
+function closeDrawer() {
+  drawer.classList.remove("open");
+  document.body.classList.remove("drawer-open");
+}
+
 function syncInsightsPanelByViewport() {
   if (!detailInsightsPanel) return;
   detailInsightsPanel.open = window.innerWidth > 1280;
@@ -394,6 +399,7 @@ async function openConversation(conversationId) {
   const detail = await fetchJson(`/conversations/${conversationId}`);
   renderDetail(detail);
   drawer.classList.add("open");
+  document.body.classList.add("drawer-open");
 }
 
 async function analyzeConversation() {
@@ -482,7 +488,7 @@ function wireEvents() {
     openConversation(button.dataset.openConversation).catch(showError);
   });
 
-  closeDrawerBtn.addEventListener("click", () => drawer.classList.remove("open"));
+  closeDrawerBtn.addEventListener("click", closeDrawer);
   window.addEventListener("resize", syncInsightsPanelByViewport);
   applyInboxFiltersBtn.addEventListener("click", () => loadInbox().catch(showError));
   sendMessageForm.addEventListener("submit", (event) => sendMessage(event).catch(showError));
