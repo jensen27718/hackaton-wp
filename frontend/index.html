@@ -199,7 +199,13 @@
         <select id="detailAgentSelect" style="width:100%; margin-bottom:8px;"></select>
       </div>
       <div id="detailMetrics" class="detail-metrics"></div>
-      <div id="detailInsights" class="insights-box"></div>
+      <details id="detailInsightsPanel" class="insights-panel">
+        <summary>
+          <span>Analisis IA</span>
+          <small>Expandir / contraer</small>
+        </summary>
+        <div id="detailInsights" class="insights-box"></div>
+      </details>
       <div id="detailMessages" class="messages"></div>
       <form id="sendMessageForm" class="send-row">
         <select id="messageSender">

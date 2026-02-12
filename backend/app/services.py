@@ -307,7 +307,8 @@ def seed_database(session: Session, payload: SeedRequest) -> dict[str, Any]:
                     select(Message).where(Message.conversation_id == conv.id).order_by(Message.ts)
                 ).all()[-30:]
             ]
-            conv.summary_json = analyze_messages(texts)
+            # Seed must never consume external AI tokens; use local mock insights.
+            conv.summary_json = analyze_messages(texts, use_deepseek=False)
             analyzed_count += 1
 
         _recalc_risk(conv, now=now)

@@ -728,7 +728,7 @@ def analyze_conversation(
         raise HTTPException(status_code=400, detail="Conversation has no messages")
 
     texts = [row.text for row in messages][-30:]
-    analysis = analyze_messages(texts)
+    analysis = analyze_messages(texts, use_deepseek=not payload.mock)
 
     conv.summary_json = analysis
     raw_sentiment = str(analysis.get("sentiment_label", "")).upper()

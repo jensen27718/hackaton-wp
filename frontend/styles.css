@@ -412,7 +412,7 @@ label {
   background: rgba(255,255,255,0.25);
 }
 
-.detail-meta, .detail-metrics, .insights-box {
+.detail-meta, .detail-metrics, .insights-panel {
   background: var(--wa-panel);
   border-radius: 8px;
   padding: 12px 14px;
@@ -421,9 +421,51 @@ label {
   font-size: 13px;
 }
 
-.insights-box {
-  max-height: 35vh;
+.insights-panel {
+  overflow: hidden;
+}
+
+.insights-panel summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--wa-dark-teal);
+}
+
+.insights-panel summary small {
+  font-size: 10px;
+  color: var(--wa-text-secondary);
+  font-weight: 500;
+}
+
+.insights-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.insights-panel summary::after {
+  content: "▾";
+  color: var(--wa-text-secondary);
+  font-size: 11px;
+  transition: transform 150ms ease;
+}
+
+.insights-panel:not([open]) summary::after {
+  transform: rotate(-90deg);
+}
+
+.insights-panel .insights-box {
+  margin-top: 10px;
+  max-height: 32vh;
   overflow-y: auto;
+}
+
+.insights-box {
+  min-height: 0;
 }
 
 /* ===== MESSAGES ===== */
@@ -530,6 +572,7 @@ label {
   .card-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
   .layout-two { grid-template-columns: 1fr; }
   .hourly { grid-template-columns: repeat(6, 1fr); }
+  .insights-panel .insights-box { max-height: 24vh; }
 }
 
 @media (max-width: 600px) {
@@ -653,4 +696,3 @@ label {
   font-size: 10px;
   font-weight: 500;
 }
-

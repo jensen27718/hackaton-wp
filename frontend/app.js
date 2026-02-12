@@ -21,6 +21,7 @@ const inboxTableBody = document.getElementById("inboxTableBody");
 
 const detailMeta = document.getElementById("detailMeta");
 const detailMetrics = document.getElementById("detailMetrics");
+const detailInsightsPanel = document.getElementById("detailInsightsPanel");
 const detailInsights = document.getElementById("detailInsights");
 const detailMessages = document.getElementById("detailMessages");
 const sendMessageForm = document.getElementById("sendMessageForm");
@@ -85,6 +86,11 @@ function setActiveView(view) {
       navButton.classList.remove("active");
     }
   });
+}
+
+function syncInsightsPanelByViewport() {
+  if (!detailInsightsPanel) return;
+  detailInsightsPanel.open = window.innerWidth > 1280;
 }
 
 function renderTopCards(cards) {
@@ -451,7 +457,7 @@ async function reseedDataset() {
       conversations: 220,
       min_messages: 6,
       max_messages: 25,
-      run_ai_on_pct: 0.35,
+      run_ai_on_pct: 0,
     }),
   });
   seedResult.textContent = JSON.stringify(result, null, 2);
@@ -477,6 +483,7 @@ function wireEvents() {
   });
 
   closeDrawerBtn.addEventListener("click", () => drawer.classList.remove("open"));
+  window.addEventListener("resize", syncInsightsPanelByViewport);
   applyInboxFiltersBtn.addEventListener("click", () => loadInbox().catch(showError));
   sendMessageForm.addEventListener("submit", (event) => sendMessage(event).catch(showError));
   analyzeButton.addEventListener("click", () => analyzeConversation().catch(showError));
@@ -502,6 +509,7 @@ function showError(error) {
 }
 
 async function boot() {
+  syncInsightsPanelByViewport();
   wireEvents();
   await refreshAll();
 }

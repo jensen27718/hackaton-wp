@@ -26,10 +26,12 @@ NEGATIVE_HINTS = {
 POSITIVE_HINTS = {"gracias", "pagado", "perfecto", "listo", "excelente"}
 
 
-def analyze_messages(texts: list[str]) -> dict:
+def analyze_messages(texts: list[str], use_deepseek: bool = True) -> dict:
     """
-    Analyzes conversation messages using DeepSeek API with a fallback to mock logic.
+    Analyze messages with DeepSeek (default) or force local mock analysis.
     """
+    if not use_deepseek:
+        return _analyze_mock(texts)
     try:
         return _analyze_with_deepseek(texts)
     except Exception as e:
